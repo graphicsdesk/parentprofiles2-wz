@@ -1,0 +1,288 @@
+@font-face {
+  font-family: Graphik;
+  src: url('https://spectator-fonts.s3.amazonaws.com/Graphik-400-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: Graphik;
+  src: url('https://spectator-fonts.s3.amazonaws.com/Graphik-600-Semibold.otf') format('opentype');
+  font-weight: 600;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, serif;
+  scroll-behavior: smooth;
+  transition: background-color 0.5s ease; /* <<< SMOOTH background color change */
+}
+
+
+section {
+  width: 100%;
+  display: flex;
+}
+
+/* TITLE Section (cover) */
+.title-section {
+  width: 100%;
+  height: 120vh;
+}
+
+/* Background Image */
+.cover-image {
+  width: 100%;
+  height: 100%;
+  background: url('images/cover_v4.jpg') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Centered Text */
+.cover-text {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Title styling exactly like you requested */
+#headline {
+  margin: 50px 100px 20px 100px;
+  font-size: 45px;
+  line-height: 1.15;
+  font-weight: 500;
+  font-family: 'Playfair Display', serif;
+  color: white;
+  text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5); /* <- ADD THIS */
+}
+
+.byline {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  max-width: 550px;
+  font-family: Graphik;
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 600;
+}
+
+.pub-date {
+  font-weight: 400!important;
+}
+
+.intro-section {
+  min-height: 100vh;
+  background: #264653;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center container but left-align text inside */
+.g-body {
+  max-width: 600px;
+  color: white;
+  padding: 2rem;
+  font-size: 19px;
+  line-height: 1.63;
+  text-align: left; /* <<< THIS ensures paragraphs start from the left */
+}
+
+/* Sticky wrapper */
+.sticky-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 400vh; /* Make it tall enough */
+  position: relative;
+}
+
+/* Sticky image */
+.sticky-image {
+  flex: 1; /* 50% */
+  position: sticky;
+  top: 0;
+  height: 105vh;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticky-img-frame {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.sticky-content {
+  flex: 1;
+  padding: 5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 100vh;
+  transition: background-color 0.5s ease;
+}
+
+.profile-text-block {
+  max-width: 600px;
+}
+
+.name {
+  font-size: 30px !important;
+  margin-bottom: 1rem !important;
+  font-weight: 400 !important;
+}
+
+.profile-text-block p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+
+}
+
+a:hover {
+  color: #23527c;
+  text-decoration: underline;
+}
+
+.dinkus {
+  text-align: center;
+  height: 20px;
+  max-width: 550px;
+}
+
+.byline-link {
+  color: white !important;
+}
+
+.byline-link:hover {
+  text-decoration: underline;
+}
+
+#fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #264653; /* fallback color */
+  opacity: 0;
+  pointer-events: none; /* don't block scrolling */
+  transition: opacity 0.6s ease;
+  z-index: 999;
+}
+
+/* MOBILE STYLES — only apply on 500px or less */
+@media only screen and (max-width: 500px) {
+  .sticky-wrapper {
+    display: block;
+  }
+
+  .sticky-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: -1;
+  }
+
+  .sticky-img-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7);
+  }
+
+  .step {
+    background-color: rgba(0, 0, 0, 0.5); /* dark overlay on text */
+    color: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .sticky-content {
+    padding: 1.5rem;
+  }
+
+  .cover-image {
+    background-image: url('images/cover-iphone.jpg') !important;
+  }
+
+  #headline {
+    font-size: 30px;
+    margin: 12px 10px 10px;
+    text-shadow: none;
+    text-align: center;
+  }
+
+  .clear-sticky {
+    background: #264653; /* or whatever your page background is */
+    position: relative;
+    z-index: 2;
+  }
+
+    
+}
+
+.photo-credit {
+  position: absolute;
+  bottom: 45px;
+  font-size: 12px;
+  color: white;
+  text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  pointer-events: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.photo-credit.left {
+  left: 12px;
+}
+
+.photo-credit.right {
+  right: 12px;
+}
+
+.cover-credit {
+  text-align: center;
+  margin-top: -10px;
+  font-size: 14px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: white;
+  padding-left: 5px;
+  background: #264653;
+}
+
+@media (max-width: 500px) {
+  .cover-credit {
+    font-size: 10px;
+    background: #264653;
+    text-align: left;
+  }
+}
+
+.clear-sticky {
+  display: flex;
+  justify-content: center; /* Center the inner content horizontally */
+}
+
+.footer {
+  text-align: left;       
+  max-width: 700px;        
+  width: 100%;
+  padding: 1rem;          
+}
