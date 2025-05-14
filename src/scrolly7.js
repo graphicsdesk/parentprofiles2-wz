@@ -51,44 +51,6 @@ function getResponsiveImage(name) {
   };
 }
 
-function handleStepEnter(element) {
-  const imgFrame = document.getElementById("sticky-img-frame");
-  const newImageKey = element.getAttribute("data-image");
-  const newColor = element.getAttribute("data-color");
-
-  const { url: newImage, courtesy, photographer } = getResponsiveImage(newImageKey);
-
-  if (newImage && imgFrame) {
-    imgFrame.style.backgroundImage = `url('${newImage}')`;
-  }
-
-  const leftCredit = document.getElementById("photo-credit-left");
-  const rightCredit = document.getElementById("photo-credit-right");
-  if (leftCredit) leftCredit.textContent = photographer || "";
-  if (rightCredit) rightCredit.textContent = courtesy || "";
-
-  if (window.innerWidth <= 500 && element.classList.contains("step")) {
-    document.querySelectorAll(".step").forEach(step => {
-      step.style.backgroundColor = "transparent";
-    });
-    element.style.backgroundColor = newColor ? `${newColor}80` : "rgba(0, 0, 0, 0.5)";
-  }
-
-  if (
-    element.classList.contains("title-section") ||
-    element.classList.contains("intro-section") ||
-    element.classList.contains("concluding-section")
-  ) {
-    document.getElementById("fade-overlay").style.opacity = 0.4;
-    setTimeout(() => {
-      document.body.style.backgroundColor = newColor || "#264653";
-      document.getElementById("fade-overlay").style.opacity = 0;
-    }, 200);
-  } else if (newColor) {
-    document.body.style.backgroundColor = newColor;
-  }
-}
-
 const scroller = scrollama();
 
 scroller
@@ -97,35 +59,42 @@ scroller
     offset: 0.5,
   })
   .onStepEnter(response => {
-    handleStepEnter(response.element);
-  });
+    const imgFrame = document.getElementById("sticky-img-frame");
+    const newImageKey = response.element.getAttribute("data-image");
+    const newColor = response.element.getAttribute("data-color");
 
-// Preload all images
-["jotera", "vien", "malky", "david"].forEach(name => {
-  const { url } = getResponsiveImage(name);
-  if (url) {
-    const img = new Image();
-    img.src = url;
-  }
-});
+    const { url: newImage, courtesy, photographer } = getResponsiveImage(newImageKey);
 
-window.addEventListener("load", () => {
-  // Let layout fully settle after load
-  setTimeout(() => {
-    scroller.resize(); // Important for Scrollama to calculate triggers
+    if (newImage && imgFrame) {
+      imgFrame.style.backgroundImage = `url('${newImage}')`;
+    }
 
-    requestAnimationFrame(() => {
-      // Ensure layout is painted
+    // Set photo credits
+    const leftCredit = document.getElementById("photo-credit-left");
+    const rightCredit = document.getElementById("photo-credit-right");
+    if (leftCredit) leftCredit.textContent = photographer || "";
+    if (rightCredit) rightCredit.textContent = courtesy || "";
+
+    // For mobile: semi-transparent text overlay
+    if (window.innerWidth <= 500 && response.element.classList.contains("step")) {
+      document.querySelectorAll(".step").forEach(step => {
+        step.style.backgroundColor = "transparent";
+      });
+      response.element.style.backgroundColor = newColor ? `${newColor}80` : "rgba(0, 0, 0, 0.5)";
+    }
+
+    // Background color transition for section headers
+    if (
+      response.element.classList.contains("title-section") ||
+      response.element.classList.contains("intro-section") ||
+      response.element.classList.contains("concluding-section")
+    ) {
+      document.getElementById("fade-overlay").style.opacity = 0.4;
       setTimeout(() => {
-        const firstVisible = document.querySelector(".step, .title-section, .intro-section, .concluding-section");
-        if (firstVisible) {
-          handleStepEnter(firstVisible); 
-        }
-      }, 0); // Run immediately after frame paint
-    });
-  }, 300); // Wait for fonts/images/CSS to stabilize
-});
-
-window.addEventListener("resize", () => {
-  scroller.resize();
-});
+        document.body.style.backgroundColor = newColor || "#264653";
+        document.getElementById("fade-overlay").style.opacity = 0;
+      }, 200);
+    } else if (newColor) {
+      document.body.style.backgroundColor = newColor;
+    }
+  });
